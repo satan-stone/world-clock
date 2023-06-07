@@ -17,11 +17,11 @@ config = json.load(cf)
 # becomes index 'i' value for creating elements
 items_in_config = len(config['places']) 
 
-# we use this to create the Frame() objects along with create_frame_vars()
+# we use this to create the Frame() objects along with create_label_vars()
 frame_vars = vars() 
 
 # used to create a consistent variable name for Frame() based on country code
-def create_frame_vars(country_code, type): 
+def create_label_vars(country_code, type): 
     if type == 'flag':
         a = country_code + '_flag_lbl'
     elif type == 'clock':
@@ -44,20 +44,20 @@ def fetch_flag(country_code):
 def load_flags(country_code, image_file, i): 
     load_image = Image.open(image_file)
     flag_image = ImageTk.PhotoImage(load_image)
-    flag_frame = create_frame_vars(country_code, 'flag')
-    frame_vars[flag_frame] = Label(frame, image=flag_image)
-    frame_vars[flag_frame].grid(column=i, row=1)
-    frame_vars[flag_frame].image = flag_image
+    flag_label = create_label_vars(country_code, 'flag')
+    frame_vars[flag_label] = Label(frame, image=flag_image)
+    frame_vars[flag_label].grid(column=i, row=1)
+    frame_vars[flag_label].image = flag_image
 
 # load clocks and keep them updating
 def get_time(locale, country_code, i): 
     os.environ['TZ'] = locale
     time.tzset()
     cur_time = time.strftime('%H:%M:%S')
-    clock_frame = create_frame_vars(country_code, 'clock')
-    frame_vars[clock_frame] = Label(frame,font=('arial', 40, 'bold') )
-    frame_vars[clock_frame].grid(column=i, row=2)
-    frame_vars[clock_frame].config(text=cur_time, )
+    clock_label = create_label_vars(country_code, 'clock')
+    frame_vars[clock_label] = Label(frame,font=('arial', 40, 'bold') )
+    frame_vars[clock_label].grid(column=i, row=2)
+    frame_vars[clock_label].config(text=cur_time, )
     root.update_idletasks()
     x = threading.Thread(target=get_time, args=(locale, country_code, i))
     x.start()
