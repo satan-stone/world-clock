@@ -1,7 +1,7 @@
 # world-clock
-An almost working Python GUI to display the time in multiple timezones. 
+A configurable Python/tkinter GUI to display the time in multiple timezones. 
 
-TODO: create proper python package, fix threading so clocks run consistently
 
-world-clock uses it config.json to create all GUI elements. Time zones are derived from /usr/share/zoneinfo. For more details see the python documentation for time.tzset(). The country code field should be in lowercase to play nicely with flagcdn.com
+world-clock uses a config based approach to create all GUI elements. Timezones can be added or removed by updating config.json. Flag images are fetched at startup from flagcdn.com. Time zones are derived from /usr/share/zoneinfo. For more details see the python documentation for time.tzset(). 
 
+Where things get weird - For reasons not yet apparent to me, when using mainloop() and .after() to update the clocks it will either only display the first clock in the config, or not update the clocks at all. In either event a race condition occurs for both. However using a while loop to drive the updates works flawlessly. I suspect this is a combination of how I am lazily creating the labels and the blocking nature of mainloop() waiting for an event to happen. 
