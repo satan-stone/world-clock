@@ -8,7 +8,7 @@ import shutil
 from PIL import ImageTk, Image
 import os
 import json
-import threading
+
 
 #read config
 cf = open('config.json', 'r')
@@ -41,7 +41,8 @@ def fetch_flag(country_code):
         pass
 
 # lets load the flags into the UI
-def load_flags(country_code, image_file, i): 
+def load_flags(country_code, i):
+    image_file = country_code + '.png'
     load_image = Image.open(image_file)
     flag_image = ImageTk.PhotoImage(load_image)
     flag_label = create_label_vars(country_code, 'flag')
@@ -63,7 +64,10 @@ def get_time(locale, country_code, i):
     
 # attempt to update clocks
 def update_time():
-    for i in range(items_in_config):
+    while True:
+        time.sleep(.6)
+        for i in range(items_in_config):
+            #s = time.time()
             locale = config['places'][i]['time_zone']
             country_code = config['places'][i]['cc']
             os.environ['TZ'] = locale
@@ -73,7 +77,7 @@ def update_time():
             frame_vars[clock_label].config(text=cur_time)
             frame_vars[clock_label].update_idletasks()
             frame_vars[clock_label].update()
-            root.after(600, update_time)
+            #print(country_code, time.time() - s)
             
 
 
@@ -88,9 +92,8 @@ for i in range(items_in_config):
     locale = config['places'][i]['time_zone']
     country_code = config['places'][i]['cc']
     fetch_flag(country_code)
-    image_file = country_code + '.png'
-    load_flags(country_code, image_file, i)
+    load_flags(country_code, i)
     get_time(locale, country_code, i)
 
 update_time()
-root.mainloop()
+#root.mainloop()
