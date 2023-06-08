@@ -89,6 +89,7 @@ frame.grid(column=0, row=0)
 
 # read in config and create UI objects
 for i in range(items_in_config):
+    print(config['places'][i])
     locale = config['places'][i]['time_zone']
     country_code = config['places'][i]['cc']
     fetch_flag(country_code)
