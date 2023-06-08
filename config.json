@@ -1,7 +1,0 @@
-{
-    "places": [ 
-          {"olson_country": "Europe/Berlin", "cc": "de"},
-          {"olson_country": "Asia/Calcutta", "cc": "in"},
-          {"olson_country": "US/Pacific", "cc": "us" }
-    ]
-}

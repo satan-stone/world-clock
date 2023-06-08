@@ -45,7 +45,7 @@ def load_flags(country_code, image_file, i):
     load_image = Image.open(image_file)
     flag_image = ImageTk.PhotoImage(load_image)
     flag_label = create_label_vars(country_code, 'flag')
-    frame_vars[flag_label] = Label(frame, image=flag_image)
+    frame_vars[flag_label] = Label(frame, borderwidth=5, image=flag_image)
     frame_vars[flag_label].grid(column=i, row=1)
     frame_vars[flag_label].image = flag_image
 
@@ -53,15 +53,29 @@ def load_flags(country_code, image_file, i):
 def get_time(locale, country_code, i): 
     os.environ['TZ'] = locale
     time.tzset()
-    cur_time = time.strftime('%H:%M:%S')
+    cur_time = time.strftime('%a %H:%M')
     clock_label = create_label_vars(country_code, 'clock')
-    frame_vars[clock_label] = Label(frame,font=('arial', 40, 'bold') )
+    frame_vars[clock_label] = Label(frame, borderwidth=5, font=('arial', 36, 'bold'))
     frame_vars[clock_label].grid(column=i, row=2)
-    frame_vars[clock_label].config(text=cur_time, )
-    root.update_idletasks()
-    x = threading.Thread(target=get_time, args=(locale, country_code, i))
-    x.start()
-    #root.after(1000, get_time(locale, country_code, i))
+    frame_vars[clock_label].config(text=cur_time)
+    frame_vars[clock_label].update_idletasks()
+    frame_vars[clock_label].update()
+    
+# attempt to update clocks
+def update_time():
+    for i in range(items_in_config):
+            locale = config['places'][i]['time_zone']
+            country_code = config['places'][i]['cc']
+            os.environ['TZ'] = locale
+            time.tzset()
+            cur_time = time.strftime('%a %H:%M')
+            clock_label = create_label_vars(country_code, 'clock')
+            frame_vars[clock_label].config(text=cur_time)
+            frame_vars[clock_label].update_idletasks()
+            frame_vars[clock_label].update()
+            root.after(600, update_time)
+            
+
 
 # create the main window    
 root = Tk()
@@ -71,11 +85,12 @@ frame.grid(column=0, row=0)
 
 # read in config and create UI objects
 for i in range(items_in_config):
-    locale = config['places'][i]['olson_country']
+    locale = config['places'][i]['time_zone']
     country_code = config['places'][i]['cc']
     fetch_flag(country_code)
     image_file = country_code + '.png'
     load_flags(country_code, image_file, i)
     get_time(locale, country_code, i)
 
+update_time()
 root.mainloop()

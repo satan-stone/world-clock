@@ -1,0 +1,7 @@
+{
+    "places": [ 
+          {"time_zone": "Europe/Berlin", "cc": "de"},
+          {"time_zone": "Asia/Calcutta", "cc": "in"},
+          {"time_zone": "US/Pacific", "cc": "us" }
+    ]
+}
