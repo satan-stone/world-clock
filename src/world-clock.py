@@ -10,7 +10,7 @@ import os
 import json
 
 
-#read config
+# read config
 cf = open('config.json', 'r')
 config = json.load(cf)
 
