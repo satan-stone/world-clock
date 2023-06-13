@@ -7,3 +7,7 @@ world-clock uses a config based approach to create all GUI elements. Timezones c
 Where things get weird - For reasons not yet apparent to me, when using mainloop() and .after() to update the clocks it will either only display the first clock in the config, or not update the clocks at all. In either event a race condition occurs for both. However using a while loop to drive the updates works flawlessly. I suspect this is a combination of how I am lazily creating the labels and the blocking nature of mainloop() waiting for an event to happen. 
 
 The thing about UTC time is it has no country or flag. I created a simple png to cover this use case. If anyone out there is willing to contribute to a better graphic, or knows of a standard representation for UTC please share details.
+
+world-clock requires python-3.9 or greater, tkinter, and the modules mentioned in requirements.txt. NOTE: MacOS default install of tkinter is broken. Use of brew versions of tkinter and python will lead to better results. The app has been tested on MacOS and Ubuntu.
+
+After satisfying the requirements, to run world-clock cd into the src directory and ./world-clock 
