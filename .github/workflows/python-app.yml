@@ -39,4 +39,5 @@ jobs:
         pytest
     - name: Create Build
       run: |
+        pip install build
         python -m build
