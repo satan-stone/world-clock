@@ -102,4 +102,3 @@ for i in range(items_in_config):
 
 
 update_time()
-#root.mainloop()
