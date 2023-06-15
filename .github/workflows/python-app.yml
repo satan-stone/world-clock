@@ -42,3 +42,7 @@ jobs:
         pip install build
         python -m build
         ls -l
+    - uses: actions/upload-artifact@v3
+      with:
+        name: world-clock
+        path: dist/
